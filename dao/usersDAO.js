@@ -42,4 +42,25 @@ module.exports = class UsersDAO {
       return { error: e };
     }
   }
+
+  /**
+   * Delete a user from the `users` collection
+   * @param {string} email - The email of the user to delete
+   * @returns {DAOResponse} Returns either a "success" or an "error" Object
+   */
+  static async deleteUser(email) {
+    try {
+      await users.deleteOne({ email: email });
+
+      if (!(await this.getUser(email))) {
+        return { success: true };
+      } else {
+        console.error("Deletion unsuccessful");
+        return { error: "Deletion unsuccessful" };
+      }
+    } catch (err) {
+      console.error(`Error occured while deleting new user ${e}`);
+      return { error: e };
+    }
+  }
 };
