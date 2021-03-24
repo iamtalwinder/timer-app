@@ -1,19 +1,16 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Provider as PaperProvider, Button } from "react-native-paper";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <PaperProvider>
+      <Button
+        icon="camera"
+        mode="contained"
+        onPress={() => console.log("Pressed")}
+      >
+        Press me
+      </Button>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
