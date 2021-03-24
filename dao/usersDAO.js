@@ -5,7 +5,7 @@ module.exports = class UsersDAO {
     if (users) return;
 
     try {
-      users = await conn.db(process.env.TASK_NS).collection("user");
+      users = await conn.db(process.env.TASK_NS).collection("users");
     } catch (e) {
       console.error(`Unable to establish collection handles in userDAO: ${e}`);
     }
