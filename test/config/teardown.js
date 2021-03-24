@@ -1,4 +1,4 @@
 module.exports = async () => {
-  console.log("Close mongo connection");
-  delete this.global.taskClient;
+  console.log("Teardown Mongo Connection");
+  delete global.taskClient;
 };

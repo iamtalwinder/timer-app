@@ -1,5 +1,5 @@
 require("dotenv").config();
 
 module.exports = async () => {
-  console.log("Setup mongo connection");
+  console.log("Setup Mongo Connection");
 };
