@@ -1,46 +1,10 @@
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const UsersDAO = require("../dao/usersDAO");
+const User = require("./user");
 
 const hashPassword = async (password) => await bcrypt.hash(password, 10);
 
-module.exports = class User {
-  constructor({ name, email, password }) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
-  }
-
-  info() {
-    return {
-      name: this.name,
-      email: this.email,
-    };
-  }
-
-  async comparePassword(plainText) {
-    return await bcrypt.compare(plainText, this.password);
-  }
-
-  encoded() {
-    return jwt.sign(
-      {
-        ...this.info(),
-      },
-      process.env.TOKEN_SECRET
-    );
-  }
-
-  static async decoded(userJwt) {
-    return jwt.verify(userJwt, process.env.TOKEN_SECRET, (error, res) => {
-      if (error) {
-        return { error };
-      }
-      return new User(res);
-    });
-  }
-};
-
-module.exports = class UserController {
+module.exports = class UsersController {
   static async register(req, res) {
     try {
       const userFromBody = req.body;
