@@ -1,3 +1,4 @@
 export { default as HomeScreen } from "./HomeScreen";
-export { default as Login } from "./Login";
-export { default as Signup } from "./Signup";
+export { default as LoginScreen } from "./LoginScreen";
+export { default as SignupScreen } from "./SignupScreen";
+export { default as DashboardScreen } from "./DashboardScreen";
