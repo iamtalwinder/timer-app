@@ -35,7 +35,7 @@ module.exports = class UsersController {
       const user = new User(userFromDB);
 
       res.status(201).send({
-        auth_token: user.encoded(),
+        authToken: user.encoded(),
         info: user.info(),
       });
     } catch (e) {
@@ -67,7 +67,7 @@ module.exports = class UsersController {
         return;
       }
 
-      res.status(200).send({ auth_token: user.encoded(), info: user.info() });
+      res.status(200).send({ authToken: user.encoded(), info: user.info() });
     } catch (e) {
       res.status(400).send({ msg: "Internal server error" });
       return;
