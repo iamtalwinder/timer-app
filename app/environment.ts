@@ -14,7 +14,11 @@ const ENV = {
   },
 };
 
-const getEnvVars = (env = Constants.manifest.releaseChannel) => {
+type CurrentEnvs = {
+  apiUrl: string;
+};
+
+const getEnvVars = (env = Constants.manifest.releaseChannel): CurrentEnvs => {
   if (__DEV__) {
     return ENV.dev;
   } else if (env === "staging") {
@@ -22,6 +26,8 @@ const getEnvVars = (env = Constants.manifest.releaseChannel) => {
   } else if (env === "prod") {
     return ENV.prod;
   }
+
+  return ENV.dev;
 };
 
 export default getEnvVars;
