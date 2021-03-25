@@ -32,7 +32,10 @@ export default function SignupScreen({ navigation }: any) {
 
       setUser(data);
 
-      navigation.replace("DashboardScreen");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "DashboardScreen" }],
+      });
     } catch (e) {
       console.log(e);
       if (e.response) {
