@@ -9,21 +9,6 @@ module.exports = class UsersController {
     try {
       const userFromBody = req.body;
 
-      let errors = {};
-
-      if (userFromBody && userFromBody.password.length < 8) {
-        errors.password = "Your password must be at least 8 characters.";
-      }
-
-      if (userFromBody && userFromBody.name.length < 3) {
-        errors.name = "You must specify a name of at least 3 characters.";
-      }
-
-      if (Object.keys(errors).length > 0) {
-        res.status(400).send(errors);
-        return;
-      }
-
       const userInfo = {
         ...userFromBody,
         password: await hashPassword(userFromBody.password),
@@ -31,20 +16,21 @@ module.exports = class UsersController {
 
       const insertResult = await UsersDAO.addUser(userInfo);
 
-      if (!insertResult.success) {
-        errors.email = insertResult.error;
+      if (
+        String(insertResult.error).startsWith(
+          "MongoError: E11000 duplicate key error"
+        )
+      ) {
+        res.status(409).send({
+          field: "email",
+          msg: "A user with the given email already exists.",
+        });
+        return;
       }
 
       const userFromDB = await UsersDAO.getUser(userFromBody.email);
 
-      if (!userFromDB) {
-        errors.general = "Internal error, please try again later";
-      }
-
-      if (Object.keys(errors).length > 0) {
-        res.status(400).send(errors);
-        return;
-      }
+      if (!userFromDB) throw Error("Database error");
 
       const user = new User(userFromDB);
 
@@ -54,7 +40,7 @@ module.exports = class UsersController {
       });
     } catch (e) {
       console.log(e);
-      res.status(500).send({ error: e });
+      res.status(500).send({ msg: "Internal server error" });
     }
   }
 
@@ -62,41 +48,28 @@ module.exports = class UsersController {
     try {
       const { email, password } = req.body;
 
-      if (!email || typeof email !== "string") {
-        res
-          .status(400)
-          .send({ error: { email: "Bad email format, expected string." } });
-        return;
-      }
-
-      if (!password || typeof password !== "string") {
-        res.status(400).send({
-          error: { password: "Bad password format, expected string." },
-        });
-        return;
-      }
-
       let userData = await UsersDAO.getUser(email);
 
       if (!userData) {
         res
           .status(401)
-          .send({ error: { password: "Make sure your email is correct." } });
+          .send({ field: "email", msg: "Make sure your email is correct." });
         return;
       }
 
       const user = new User(userData);
 
       if (!(await user.comparePassword(password))) {
-        res
-          .status(401)
-          .send({ error: { password: "Make sure your password is correct." } });
+        res.status(401).send({
+          field: "password",
+          msg: "Make sure your password is correct.",
+        });
         return;
       }
 
       res.status(200).send({ auth_token: user.encoded(), info: user.info() });
     } catch (e) {
-      res.status(400).json({ error: e });
+      res.status(400).send({ msg: "Internal server error" });
       return;
     }
   }
