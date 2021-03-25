@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import axios from "axios";
 import {
   Background,
   BackButton,
@@ -9,13 +10,47 @@ import {
 } from "../components";
 import { theme } from "../core/theme";
 import { FormInput } from "./types";
+import getEnvVars from "../../environment";
+import { Context as UserContext } from "../context/user";
+
+const { apiUrl } = getEnvVars();
 
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState<FormInput>({ value: "", error: "" });
   const [password, setPassword] = useState<FormInput>({ value: "", error: "" });
 
-  const login = () => {
-    navigation.navigate("DashboardScreen");
+  const { setUser } = useContext(UserContext);
+
+  const login = async () => {
+    try {
+      const { data } = await axios.post(`${apiUrl}/v1/user/login`, {
+        email: email.value,
+        password: password.value,
+      });
+
+      setUser(data);
+
+      navigation.replace("DashboardScreen");
+    } catch (e) {
+      if (e.response) {
+        const { data } = e.response;
+        switch (data.field) {
+          case "email":
+            setEmail((prevState) => ({ ...prevState, error: data.msg }));
+            break;
+
+          case "password":
+            setPassword((prevState) => ({ ...prevState, error: data.msg }));
+            break;
+
+          default:
+            alert(data.msg);
+            break;
+        }
+      } else {
+        alert("Something went wrong! Please try again");
+      }
+    }
   };
 
   return (

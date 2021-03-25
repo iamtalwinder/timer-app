@@ -52,7 +52,7 @@ module.exports = class UsersController {
 
       if (!userData) {
         res
-          .status(401)
+          .status(406)
           .send({ field: "email", msg: "Make sure your email is correct." });
         return;
       }
@@ -60,7 +60,7 @@ module.exports = class UsersController {
       const user = new User(userData);
 
       if (!(await user.comparePassword(password))) {
-        res.status(401).send({
+        res.status(406).send({
           field: "password",
           msg: "Make sure your password is correct.",
         });

@@ -1,6 +1,6 @@
 import Constants from "expo-constants";
 
-const localhost = "http://172.20.10.14:5000/api";
+const localhost = "http://192.168.56.1:3000/api";
 
 const ENV = {
   dev: {
