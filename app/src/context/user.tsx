@@ -1,15 +1,8 @@
 import React, { createContext, useState } from "react";
+import { User } from "./types";
 
 type Props = {
   children: React.ReactNode;
-};
-
-type User = {
-  authToken: string;
-  info: {
-    name: string;
-    email: string;
-  };
 };
 
 const initialState: User = { authToken: "", info: { name: "", email: "" } };

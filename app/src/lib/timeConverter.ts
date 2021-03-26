@@ -1,8 +1,4 @@
-export type Time = {
-  hours: number;
-  minutes: number;
-  seconds: number;
-};
+import { Time } from "./types";
 
 export default class TimeConverter {
   static toHHMMSS(seconds: number): Time {

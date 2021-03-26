@@ -6,3 +6,4 @@ export { default as BackButton } from "./BackButton";
 export { default as TextInput } from "./TextInput";
 export { default as DashboardMenu } from "./DashboardMenu";
 export { default as TimePicker } from "./TimePicker";
+export { default as Task } from "./Task";

@@ -1,19 +1,33 @@
 import React, { useReducer, createContext } from "react";
-import { Time } from "../lib/timeConverter";
+import { Task } from "./types";
 
 type Props = {
   children: React.ReactNode;
 };
 
-type Task = {
-  title: string;
-  description: string;
-  time: Time;
-};
-
 type Action = { type: "ADD_TASK"; payload: Task };
 
-const initialState: Task[] = [];
+const initialState: Task[] = [
+  {
+    title: "Demo Task 1",
+    description: "This is demo task 1",
+    time: {
+      hours: 0,
+      minutes: 0,
+      seconds: 4,
+    },
+  },
+
+  {
+    title: "Demo Task 2",
+    description: "This is demo task 2",
+    time: {
+      hours: 0,
+      minutes: 0,
+      seconds: 5,
+    },
+  },
+];
 
 export const Context = createContext<{
   tasks: Task[];

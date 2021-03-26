@@ -2,7 +2,8 @@ import React, { useState, useReducer, useContext } from "react";
 import { View, StyleSheet } from "react-native";
 import { Background, TextInput, TimePicker, Button } from "../components";
 import { FormInput } from "./types";
-import TimeConverter, { Time } from "../lib/timeConverter";
+import TimeConverter from "../lib/timeConverter";
+import { Time } from "../lib/types";
 import { Context as TasksContext } from "../context/tasks";
 
 type TimeAction =
