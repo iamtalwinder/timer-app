@@ -1,4 +1,5 @@
 import React, { useReducer, createContext } from "react";
+import { Time } from "../lib/timeConverter";
 
 type Props = {
   children: React.ReactNode;
@@ -7,10 +8,10 @@ type Props = {
 type Task = {
   title: string;
   description: string;
-  time: number;
+  time: Time;
 };
 
-type Action = { type: "SET_TASK"; payload: Task };
+type Action = { type: "ADD_TASK"; payload: Task };
 
 const initialState: Task[] = [];
 
@@ -23,7 +24,7 @@ Context.displayName = "TasksContext";
 
 function reducer(state: Task[], action: Action): Task[] {
   switch (action.type) {
-    case "SET_TASK":
+    case "ADD_TASK":
       return [...state, action.payload];
 
     default:
