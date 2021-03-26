@@ -66,7 +66,7 @@ export default function SignupScreen({ navigation }: any) {
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
-      <Header>Welcome back.</Header>
+      <Header>Sign Up</Header>
       <TextInput
         label="Name"
         returnKeyType="next"
