@@ -7,7 +7,7 @@ module.exports = class UsersDAO {
     try {
       users = await conn.db(process.env.TASK_NS).collection("users");
     } catch (e) {
-      console.error(`Unable to establish collection handles in userDAO: ${e}`);
+      console.error(`Unable to establish collection handles in usersDAO: ${e}`);
     }
   }
 
@@ -61,3 +61,18 @@ module.exports = class UsersDAO {
     }
   }
 };
+
+/**
+ * Parameter passed to addUser method
+ * @typedef UserInfo
+ * @property {string} name
+ * @property {string} email
+ * @property {string} password
+ */
+
+/**
+ * Success/Error return object
+ * @typedef DAOResponse
+ * @property {boolean} [success] - Success
+ * @property {string} [error] - Error
+ */
