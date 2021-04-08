@@ -1,4 +1,4 @@
-const UsersDAO = require("../dao/usersDAO");
+const UsersDAO = require("../src/dao/usersDAO");
 
 const testUser = {
   name: "Test",
