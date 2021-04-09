@@ -16,9 +16,9 @@ describe("User Management", () => {
   });
 
   test("Can add a new user to the database", async () => {
-    const actual = await UsersDAO.addUser(testUser);
-    expect(actual.success).toBeTruthy();
-    expect(actual.error).toBeUndefined();
+    const response = await UsersDAO.addUser(testUser);
+    expect(response.success).toBeTruthy();
+    expect(response.error).toBeUndefined();
 
     const user = await UsersDAO.getUser(testUser.email);
 
