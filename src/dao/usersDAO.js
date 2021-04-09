@@ -56,7 +56,7 @@ module.exports = class UsersDAO {
         return { error: "Deletion unsuccessful" };
       }
     } catch (err) {
-      console.error(`Error occured while deleting new user ${e}`);
+      console.error(`Error occured while deleting user ${e}`);
       return { error: e };
     }
   }
