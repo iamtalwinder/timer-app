@@ -90,10 +90,11 @@ module.exports = class TasksDAO {
 /**
  * Task document in the database
  * @typedef Task
+ * @property {string} _id
+ * @property {string} user_id - The id of user in users collection
  * @property {string} title
  * @property {string} description
  * @property {Time} time
- * @property {string} user_id - The id of user in users collection
  */
 
 /**
