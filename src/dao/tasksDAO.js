@@ -1,3 +1,4 @@
+const { ObjectId } = require("bson");
 let tasks;
 
 module.exports = class TasksDAO {
@@ -18,7 +19,7 @@ module.exports = class TasksDAO {
    */
 
   static async getTask(taskId) {
-    return await tasks.findOne({ _id: taskId });
+    return await tasks.findOne({ _id: ObjectId(taskId) });
   }
 
   /**
@@ -45,7 +46,7 @@ module.exports = class TasksDAO {
 
   static async deleteTask(taskId) {
     try {
-      await tasks.deleteOne({ _id: taskId });
+      await tasks.deleteOne({ _id: ObjectId(taskId) });
 
       if (!(await this.getTask(taskId))) {
         return { success: true };
@@ -66,6 +67,7 @@ module.exports = class TasksDAO {
  * @property {string} title
  * @property {string} description
  * @property {Time} time
+ * @property {string} user_id - The id of user in users collection
  */
 
 /**
