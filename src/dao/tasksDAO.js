@@ -24,13 +24,28 @@ module.exports = class TasksDAO {
 
   /**
    * Add a task to 'tasks' collection
-   * @param {TaskInfo} taskInfo - The information of the task to add
+   * @param {string} userId - The _id field of a user in 'users' collection
+   * @param {string} title - The title of the task
+   * @param {string} description - The description of the task
+   * @param {Time} time - The time of the task
+   * @param {string} taskId - The _id of the task to add
    * @returns {DAOResponse} - Returns either a "success" or an "error" Object
    */
 
-  static async addTask(taskInfo) {
+  static async addTask(userId, title, description, time, taskId) {
     try {
-      await tasks.insertOne(taskInfo);
+      const newTask = {
+        user_id: ObjectId(userId),
+        title: title,
+        description: description,
+        time: time,
+      };
+
+      if (taskId) {
+        newTask["_id"] = ObjectId(taskId);
+      }
+
+      await tasks.insertOne(newTask);
       return { success: true };
     } catch (e) {
       console.error(`Error occured while adding new task, ${e}`);
@@ -38,6 +53,17 @@ module.exports = class TasksDAO {
     }
   }
 
+  /**
+   * Update a task from the 'tasks' collection
+   * @param {string} taskId - The _id of the task to update
+   * @param {string} userId - The user_id field of the task to update
+   * @param {string} title - The title of the task
+   * @param {string} description - The description of the task
+   * @param {Time} time - The time of the task
+   * @returns {DAOResponse} - Returns either a "success" or an "error" Object
+   */
+
+  static async updateTask(taskId, userId, title, description, time) {}
   /**
    * Delete a task from the 'tasks' collection
    * @param {string} taskId - The _id of the task in the `tasks` collection
@@ -62,8 +88,8 @@ module.exports = class TasksDAO {
 };
 
 /**
- * Parameter passed to addTask method
- * @typedef TaskInfo
+ * Task document in the database
+ * @typedef Task
  * @property {string} title
  * @property {string} description
  * @property {Time} time
