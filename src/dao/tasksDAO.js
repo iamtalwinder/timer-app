@@ -63,7 +63,20 @@ module.exports = class TasksDAO {
    * @returns {DAOResponse} - Returns either a "success" or an "error" Object
    */
 
-  static async updateTask(taskId, userId, title, description, time) {}
+  static async updateTask(taskId, userId, title, description, time) {
+    try {
+      await tasks.updateOne(
+        { _id: ObjectId(taskId), user_id: ObjectId(userId) },
+        { $set: { title: title, description: description, time: time } }
+      );
+
+      return { success: true };
+    } catch (e) {
+      console.error(`Unable to update task:, ${e}`);
+      return { error: e };
+    }
+  }
+
   /**
    * Delete a task from the 'tasks' collection
    * @param {string} taskId - The _id of the task in the `tasks` collection

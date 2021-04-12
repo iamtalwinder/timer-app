@@ -1,3 +1,4 @@
+const { ObjectId } = require("bson");
 const TasksDAO = require("../src/dao/tasksDAO");
 
 const testTask = {
@@ -38,6 +39,36 @@ describe("Task Management", () => {
       time,
       _id: ObjectId(_id),
       user_id: ObjectId(user_id),
+    });
+  });
+
+  test("Can update a task from the database", async () => {
+    const updatedTask = {
+      ...testTask,
+      title: "New title",
+      description: "New description",
+      time: { hours: 1, minutes: 1, seconds: 1 },
+    };
+
+    const response = await TasksDAO.updateTask(
+      updatedTask._id,
+      updatedTask.user_id,
+      updatedTask.title,
+      updatedTask.description,
+      updatedTask.time
+    );
+
+    expect(response.success).toBeTruthy();
+    expect(response.error).toBeUndefined();
+
+    const updatedTaskFromDB = await TasksDAO.getTask(updatedTask._id);
+
+    expect(updatedTaskFromDB).toEqual({
+      title: updatedTask.title,
+      description: updatedTask.description,
+      time: updatedTask.time,
+      _id: ObjectId(updatedTask._id),
+      user_id: ObjectId(updatedTask.user_id),
     });
   });
 
