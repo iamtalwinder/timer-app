@@ -11,6 +11,7 @@ const testTask = {
     minutes: 0,
     seconds: 5,
   },
+  date: new Date(),
 };
 
 describe("Task Management", () => {
@@ -19,12 +20,13 @@ describe("Task Management", () => {
   });
 
   test("Can add a task to the database", async () => {
-    const { _id, user_id, title, description, time } = testTask;
+    const { _id, user_id, title, description, time, date } = testTask;
     const response = await TasksDAO.addTask(
       user_id,
       title,
       description,
       time,
+      date,
       _id
     );
 
@@ -37,13 +39,14 @@ describe("Task Management", () => {
       title,
       description,
       time,
+      date,
       _id: ObjectId(_id),
       user_id: ObjectId(user_id),
     });
   });
 
   test("Can update a task from the database", async () => {
-    const updatedTask = {
+    const { _id, user_id, title, description, time, date } = {
       ...testTask,
       title: "New title",
       description: "New description",
@@ -51,24 +54,26 @@ describe("Task Management", () => {
     };
 
     const response = await TasksDAO.updateTask(
-      updatedTask._id,
-      updatedTask.user_id,
-      updatedTask.title,
-      updatedTask.description,
-      updatedTask.time
+      _id,
+      user_id,
+      title,
+      description,
+      time,
+      date
     );
 
     expect(response.success).toBeTruthy();
     expect(response.error).toBeUndefined();
 
-    const updatedTaskFromDB = await TasksDAO.getTask(updatedTask._id);
+    const updatedTaskFromDB = await TasksDAO.getTask(_id);
 
     expect(updatedTaskFromDB).toEqual({
-      title: updatedTask.title,
-      description: updatedTask.description,
-      time: updatedTask.time,
-      _id: ObjectId(updatedTask._id),
-      user_id: ObjectId(updatedTask.user_id),
+      title: title,
+      description: description,
+      time: time,
+      date: date,
+      _id: ObjectId(_id),
+      user_id: ObjectId(user_id),
     });
   });
 

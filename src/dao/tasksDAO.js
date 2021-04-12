@@ -28,17 +28,19 @@ module.exports = class TasksDAO {
    * @param {string} title - The title of the task
    * @param {string} description - The description of the task
    * @param {Time} time - The time of the task
+   * @param {string} date - The date on which the task was created
    * @param {string} taskId - The _id of the task to add
    * @returns {DAOResponse} - Returns either a "success" or an "error" Object
    */
 
-  static async addTask(userId, title, description, time, taskId) {
+  static async addTask(userId, title, description, time, date, taskId) {
     try {
       const newTask = {
         user_id: ObjectId(userId),
         title: title,
         description: description,
         time: time,
+        date: date,
       };
 
       if (taskId) {
@@ -60,14 +62,22 @@ module.exports = class TasksDAO {
    * @param {string} title - The title of the task
    * @param {string} description - The description of the task
    * @param {Time} time - The time of the task
+   * @param {string} date - The date on which the task was updated
    * @returns {DAOResponse} - Returns either a "success" or an "error" Object
    */
 
-  static async updateTask(taskId, userId, title, description, time) {
+  static async updateTask(taskId, userId, title, description, time, date) {
     try {
       await tasks.updateOne(
         { _id: ObjectId(taskId), user_id: ObjectId(userId) },
-        { $set: { title: title, description: description, time: time } }
+        {
+          $set: {
+            title: title,
+            description: description,
+            time: time,
+            date: date,
+          },
+        }
       );
 
       return { success: true };
@@ -108,6 +118,7 @@ module.exports = class TasksDAO {
  * @property {string} title
  * @property {string} description
  * @property {Time} time
+ * @property {string} date
  */
 
 /**
