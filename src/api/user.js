@@ -2,7 +2,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 module.exports = class User {
-  constructor({ name, email, password }) {
+  constructor({ _id, name, email, password }) {
+    this._id = _id;
     this.name = name;
     this.email = email;
     this.password = password;
@@ -10,6 +11,7 @@ module.exports = class User {
 
   info() {
     return {
+      _id: this._id,
       name: this.name,
       email: this.email,
     };
