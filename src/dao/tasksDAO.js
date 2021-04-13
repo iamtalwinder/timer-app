@@ -23,6 +23,21 @@ module.exports = class TasksDAO {
   }
 
   /**
+   * Finds all tasks related to a user in 'tasks' collection
+   * @param {string} userId - The _id of the user
+   * @returns {Array | null} Returns either a sorted(most recent to least) array of tasks or nothing
+   */
+
+  static async getAllTasks(userId) {
+    return (
+      await tasks.aggregate([
+        { $match: { user_id: userId } },
+        { $sort: { date: -1 } },
+      ])
+    ).toArray();
+  }
+
+  /**
    * Add a task to 'tasks' collection
    * @param {string} userId - The _id field of a user in 'users' collection
    * @param {string} title - The title of the task
