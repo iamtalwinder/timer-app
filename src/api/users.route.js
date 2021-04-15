@@ -5,7 +5,7 @@ const { registerSchema, loginSchema } = require("./users.controller.schema");
 
 const router = new Router();
 
-router.post("/register", validator(registerSchema), UsersController.register);
-router.post("/login", validator(loginSchema), UsersController.login);
+router.post("/register", validator(registerSchema), UsersController.apiRegister);
+router.post("/login", validator(loginSchema), UsersController.apiLogin);
 
 module.exports = router;

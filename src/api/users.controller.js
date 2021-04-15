@@ -5,7 +5,7 @@ const User = require("./user");
 const hashPassword = async (password) => await bcrypt.hash(password, 10);
 
 module.exports = class UsersController {
-  static async register(req, res) {
+  static async apiRegister(req, res) {
     try {
       const userFromBody = req.body;
 
@@ -44,7 +44,7 @@ module.exports = class UsersController {
     }
   }
 
-  static async login(req, res) {
+  static async apiLogin(req, res) {
     try {
       const { email, password } = req.body;
 
