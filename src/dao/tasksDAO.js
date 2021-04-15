@@ -45,7 +45,7 @@ module.exports = class TasksDAO {
    * @param {Time} time - The time of the task
    * @param {string} date - The date on which the task was created
    * @param {string} taskId - The _id of the task to add
-   * @returns {DAOResponse} - Returns either a "success" or an "error" Object
+   * @returns {DAOResponse} - Returns either a "DBresponse" or an "error" Object
    */
 
   static async addTask(userId, title, description, time, date, taskId) {
@@ -62,8 +62,7 @@ module.exports = class TasksDAO {
         newTask["_id"] = ObjectId(taskId);
       }
 
-      await tasks.insertOne(newTask);
-      return { success: true };
+      return await tasks.insertOne(newTask);
     } catch (e) {
       console.error(`Error occured while adding new task, ${e}`);
       return { error: e };

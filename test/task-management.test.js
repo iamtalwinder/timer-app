@@ -63,8 +63,8 @@ describe("Task Management", () => {
       _id
     );
 
-    expect(response.success).toBeTruthy();
-    expect(response.error).toBeUndefined();
+    expect(response.insertedCount).toBe(1);
+    expect(response.insertedId).toEqual(ObjectId(_id));
 
     const task = await TasksDAO.getTask(_id);
 
