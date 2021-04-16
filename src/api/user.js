@@ -31,9 +31,9 @@ module.exports = class User {
   }
 
   static async decoded(userJwt) {
-    return jwt.verify(userJwt, process.env.TOKEN_SECRET, (error, res) => {
-      if (error) {
-        return { error };
+    return jwt.verify(userJwt, process.env.TOKEN_SECRET, (e, res) => {
+      if (e) {
+        throw e;
       }
       return new User(res);
     });
