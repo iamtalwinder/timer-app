@@ -119,15 +119,21 @@ describe("Task Management", () => {
   });
 
   test("Tasks should be sorted by date", async () => {
+    const newTasks = tasks.map((task) => ({
+      ...task,
+      _id: ObjectId(task._id),
+      user_id: ObjectId(task.user_id),
+    }));
+
     await global.taskClient
       .db(process.env.TASK_NS)
       .collection("tasks")
-      .insertMany(tasks);
+      .insertMany(newTasks);
 
     const dbTasks = await TasksDAO.getAllTasks(tasks[0].user_id);
 
     expect(dbTasks).toEqual(
-      tasks.sort((a, b) => new Date(b.date) - new Date(a.date))
+      newTasks.sort((a, b) => new Date(b.date) - new Date(a.date))
     );
   });
 });
