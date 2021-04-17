@@ -1,19 +1,36 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, ActivityIndicator, View } from "react-native";
 import { IconButton } from "react-native-paper";
+import axios from "axios";
 import { Background, Paragraph, Task } from "../components";
 import { theme } from "../core/theme";
 import { Context as TasksContext } from "../context/tasks";
+import { Context as UserContext } from "../context/user";
+import getEnvVars from "../../environment";
+
+const { apiUrl } = getEnvVars();
 
 export default function DashboardScreen({ navigation }: any) {
   const [loading, setLoading] = useState(true);
 
-  const { tasks } = useContext(TasksContext);
+  const { tasks, dispatch: tasksDispatch } = useContext(TasksContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    setTimeout(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/v1/task`, {
+          headers: { Authorization: `Bearer ${user.authToken}` },
+        });
+        tasksDispatch({ type: "ADD_TASKS", payload: response.data.tasks });
+      } catch (e) {
+        alert("Unable to fetch tasks");
+      }
+
       setLoading(false);
-    }, 10);
+    };
+
+    fetchTasks();
   }, []);
 
   return (
