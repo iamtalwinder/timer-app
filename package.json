@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "node ./src/index.js"
   },
   "repository": {
     "type": "git",
