@@ -5,29 +5,11 @@ type Props = {
   children: React.ReactNode;
 };
 
-type Action = { type: "ADD_TASK"; payload: Task };
+type Action =
+  | { type: "ADD_TASK"; payload: Task }
+  | { type: "ADD_TASKS"; payload: Task[] };
 
-const initialState: Task[] = [
-  {
-    title: "Demo Task 1",
-    description: "This is demo task 1",
-    time: {
-      hours: 0,
-      minutes: 0,
-      seconds: 4,
-    },
-  },
-
-  {
-    title: "Demo Task 2",
-    description: "This is demo task 2",
-    time: {
-      hours: 0,
-      minutes: 0,
-      seconds: 5,
-    },
-  },
-];
+const initialState: Task[] = [];
 
 export const Context = createContext<{
   tasks: Task[];
@@ -40,6 +22,9 @@ function reducer(state: Task[], action: Action): Task[] {
   switch (action.type) {
     case "ADD_TASK":
       return [...state, action.payload];
+
+    case "ADD_TASKS":
+      return action.payload;
 
     default:
       return state;
