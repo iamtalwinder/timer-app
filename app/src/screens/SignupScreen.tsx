@@ -19,11 +19,13 @@ export default function SignupScreen({ navigation }: any) {
   const [name, setName] = useState<FormInput>({ value: "", error: "" });
   const [email, setEmail] = useState<FormInput>({ value: "", error: "" });
   const [password, setPassword] = useState<FormInput>({ value: "", error: "" });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { setUser } = useContext(UserContext);
 
   const signup = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.post(`${apiUrl}/v1/user/register`, {
         name: name.value,
         email: email.value,
@@ -37,6 +39,7 @@ export default function SignupScreen({ navigation }: any) {
         routes: [{ name: "DashboardScreen" }],
       });
     } catch (e) {
+      setLoading(false);
       console.log(e);
       if (e.response) {
         const { data } = e.response;
@@ -99,13 +102,21 @@ export default function SignupScreen({ navigation }: any) {
         secureTextEntry
       />
 
-      <Button mode="contained" onPress={signup}>
+      <Button
+        mode="contained"
+        onPress={signup}
+        loading={loading}
+        disabled={loading}
+      >
         Sign Up
       </Button>
 
       <View style={styles.row}>
         <Text>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace("LoginScreen")}>
+        <TouchableOpacity
+          onPress={() => navigation.replace("LoginScreen")}
+          disabled={loading}
+        >
           <Text style={styles.link}>Login</Text>
         </TouchableOpacity>
       </View>

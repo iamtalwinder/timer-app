@@ -18,11 +18,13 @@ const { apiUrl } = getEnvVars();
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState<FormInput>({ value: "", error: "" });
   const [password, setPassword] = useState<FormInput>({ value: "", error: "" });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { setUser } = useContext(UserContext);
 
   const login = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.post(`${apiUrl}/v1/user/login`, {
         email: email.value,
         password: password.value,
@@ -35,6 +37,7 @@ export default function LoginScreen({ navigation }: any) {
         routes: [{ name: "DashboardScreen" }],
       });
     } catch (e) {
+      setLoading(false);
       if (e.response) {
         const { data } = e.response;
         switch (data.field) {
@@ -89,13 +92,21 @@ export default function LoginScreen({ navigation }: any) {
         </TouchableOpacity>
       </View>
 
-      <Button mode="contained" onPress={login}>
+      <Button
+        mode="contained"
+        onPress={login}
+        loading={loading}
+        disabled={loading}
+      >
         Login
       </Button>
 
       <View style={styles.row}>
         <Text>Don't have and account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace("SignupScreen")}>
+        <TouchableOpacity
+          onPress={() => navigation.replace("SignupScreen")}
+          disabled={loading}
+        >
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
