@@ -31,7 +31,7 @@ module.exports = class TasksDAO {
   static async getAllTasks(userId) {
     return (
       await tasks.aggregate([
-        { $match: { user_id: userId } },
+        { $match: { user_id: ObjectId(userId) } },
         { $sort: { date: -1 } },
       ])
     ).toArray();
