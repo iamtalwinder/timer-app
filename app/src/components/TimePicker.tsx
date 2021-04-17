@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React from "react";
 import { View, StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 import { Time } from "../lib/types";
