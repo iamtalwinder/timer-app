@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import { View, StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
-import { Time } from "../lib/timeConverter";
+import { Time } from "../lib/types";
 
 type Props = {
   time: Time;
