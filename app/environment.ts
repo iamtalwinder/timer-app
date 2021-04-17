@@ -1,16 +1,16 @@
 import Constants from "expo-constants";
 
-const localhost = "http://192.168.56.1:3000/api";
+const localhost = "https://task-api-pro.herokuapp.com/api";
 
 const ENV = {
   dev: {
     apiUrl: localhost,
   },
   staging: {
-    apiUrl: "",
+    apiUrl: "https://task-api-pro.herokuapp.com/api",
   },
   prod: {
-    apiUrl: "[]",
+    apiUrl: "https://task-api-pro.herokuapp.com/api",
   },
 };
 
