@@ -10,6 +10,7 @@ const {
 const router = new Router();
 router.use(auth);
 
+router.get("/", TasksController.apiGetTasks);
 router.post("/", validator(addTaskSchema), TasksController.apiAddTask);
 router.put("/", validator(updateTaskSchema), TasksController.apiUpdateTask);
 router.delete("/", validator(deleteTaskSchema), TasksController.apiDeleteTask);

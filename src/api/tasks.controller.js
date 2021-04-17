@@ -1,6 +1,16 @@
 const TasksDAO = require("../dao/tasksDAO");
 
 module.exports = class TasksController {
+  static async apiGetTasks(req, res) {
+    try {
+      const tasks = await TasksDAO.getAllTasks(req.user._id);
+      res.status(200).send({ tasks });
+    } catch (e) {
+      console.error(e);
+      res.status(500).send({ msg: "Internal server error" });
+    }
+  }
+
   static async apiAddTask(req, res) {
     try {
       const { title, description, time } = req.body;
