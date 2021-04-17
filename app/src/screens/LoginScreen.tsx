@@ -65,7 +65,7 @@ export default function LoginScreen({ navigation }: any) {
         returnKeyType="next"
         value={email.value}
         onChangeText={(text: string) => setEmail({ value: text, error: "" })}
-        error={email.error}
+        error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
         autoCompleteType="email"
@@ -78,7 +78,7 @@ export default function LoginScreen({ navigation }: any) {
         returnKeyType="done"
         value={password.value}
         onChangeText={(text: string) => setPassword({ value: text, error: "" })}
-        error={password.error}
+        error={!!password.error}
         errorText={password.error}
         secureTextEntry
       />

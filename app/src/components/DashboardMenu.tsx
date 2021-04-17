@@ -3,7 +3,7 @@ import { Menu, Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 export default function DashboardMenu() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
