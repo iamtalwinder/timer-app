@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  Card,
-  Text,
-  Menu,
-  IconButton,
-  ActivityIndicator,
-} from "react-native-paper";
+import { Card, Text, Menu, IconButton } from "react-native-paper";
 import axios from "axios";
 import TimeConverter from "../lib/timeConverter";
 import { Time as TimeType } from "../lib/types";
@@ -23,7 +17,6 @@ type Props = {
 
 export default function Task({ task }: Props) {
   const [timer, setTimer] = useState<boolean>(false);
-  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [time, setTime] = useState<TimeType>(task.time);
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
   const { dispatch: tasksDispatch } = useContext(TasksContext);
@@ -36,14 +29,13 @@ export default function Task({ task }: Props) {
     try {
       setTimer(false);
       setMenuVisible(false);
-      setDeleteLoading(true);
+
+      tasksDispatch({ type: "DELETE_TASK", payload: task._id });
 
       await axios.delete(`${apiUrl}/v1/task`, {
         data: { taskId: task._id },
         headers: { Authorization: `Bearer ${user.authToken}` },
       });
-
-      tasksDispatch({ type: "DELETE_TASK", payload: task._id });
     } catch (e) {
       console.log(e);
       alert("Unable to delete task. Try again!");
@@ -77,13 +69,7 @@ export default function Task({ task }: Props) {
         <Menu
           visible={menuVisible}
           onDismiss={closeMenu}
-          anchor={
-            deleteLoading ? (
-              <ActivityIndicator />
-            ) : (
-              <IconButton icon="dots-vertical" onPress={openMenu} />
-            )
-          }
+          anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
         >
           <Menu.Item
             onPress={() => {
