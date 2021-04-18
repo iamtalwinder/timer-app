@@ -10,7 +10,7 @@ export default class TimeConverter {
   }
 
   static toSeconds(time: Time): number {
-    return time.hours * 36000 + time.minutes * 60 + time.seconds;
+    return time.hours * 3600 + time.minutes * 60 + time.seconds;
   }
 
   static correct(time: Time): Time {
