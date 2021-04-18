@@ -55,7 +55,7 @@ export default function DashboardScreen({ navigation }: any) {
 
         {!loading &&
           !!tasks.length &&
-          tasks.map((task, index) => <Task key={index} task={task} />)}
+          tasks.map((task) => <Task key={task._id} task={task} />)}
       </View>
     </Background>
   );

@@ -8,7 +8,8 @@ type Props = {
 type Action =
   | { type: "ADD_TASK"; payload: Task }
   | { type: "ADD_TASKS"; payload: Task[] }
-  | { type: "DELETE_TASK"; payload: string };
+  | { type: "DELETE_TASK"; payload: string }
+  | { type: "UPDATE_TASK"; payload: Task };
 
 const initialState: Task[] = [];
 
@@ -29,6 +30,12 @@ function reducer(state: Task[], action: Action): Task[] {
 
     case "DELETE_TASK":
       return state.filter((task) => task._id !== action.payload);
+
+    case "UPDATE_TASK":
+      return [
+        action.payload,
+        ...state.filter((task) => task._id !== action.payload._id),
+      ];
 
     default:
       return state;

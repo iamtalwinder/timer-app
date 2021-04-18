@@ -1,12 +1,12 @@
 import React, { useState, useReducer, useContext } from "react";
 import { View, StyleSheet } from "react-native";
+import axios from "axios";
 import { Background, TextInput, TimePicker, Button } from "../components";
 import { FormInput } from "./types";
 import TimeConverter from "../lib/timeConverter";
 import { Time } from "../lib/types";
 import { Context as TasksContext } from "../context/tasks";
 import { Context as UserContext } from "../context/user";
-import axios from "axios";
 import getEnvVars from "../../environment";
 
 const { apiUrl } = getEnvVars();
@@ -16,11 +16,15 @@ type TimeAction =
   | { type: "CHANGE_MINUTES"; payload: number }
   | { type: "CHANGE_SECONDS"; payload: number };
 
-export default function AddTaskScreen({ navigation }: any) {
+export default function EditTaskScreen({ navigation, route }: any) {
+  const { task } = route.params;
   const [loading, setLoading] = useState<boolean>(false);
-  const [title, setTitle] = useState<FormInput>({ value: "", error: "" });
+  const [title, setTitle] = useState<FormInput>({
+    value: task.title,
+    error: "",
+  });
   const [description, setDescription] = useState<FormInput>({
-    value: "",
+    value: task.description,
     error: "",
   });
 
@@ -40,29 +44,30 @@ export default function AddTaskScreen({ navigation }: any) {
     }
   };
 
-  const [time, timeDispatch] = useReducer(timeReducer, {
-    hours: 0,
-    minutes: 0,
-    seconds: 3,
-  });
+  const [time, timeDispatch] = useReducer(timeReducer, task.time);
 
   const { dispatch: tasksDispatch } = useContext(TasksContext);
   const { user } = useContext(UserContext);
 
-  const addTask = async () => {
+  const updateTask = async () => {
     try {
       setLoading(true);
       let isSubscribed = true;
-      const response = await axios.post(
+      const response = await axios.put(
         `${apiUrl}/v1/task`,
-        { title: title.value, description: description.value, time },
+        {
+          taskId: task._id,
+          title: title.value,
+          description: description.value,
+          time,
+        },
         {
           headers: { Authorization: `Bearer ${user.authToken}` },
         }
       );
 
       if (isSubscribed) {
-        tasksDispatch({ type: "ADD_TASK", payload: response.data.task });
+        tasksDispatch({ type: "UPDATE_TASK", payload: response.data.task });
         navigation.goBack();
       }
 
@@ -121,11 +126,11 @@ export default function AddTaskScreen({ navigation }: any) {
 
         <Button
           mode="contained"
-          onPress={addTask}
+          onPress={updateTask}
           loading={loading}
           disabled={loading}
         >
-          Add
+          Update
         </Button>
       </View>
     </Background>

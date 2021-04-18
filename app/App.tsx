@@ -9,6 +9,7 @@ import {
   SignupScreen,
   DashboardScreen,
   AddTaskScreen,
+  EditTaskScreen,
 } from "./src/screens";
 import { theme } from "./src/core/theme";
 import UserContextProvider from "./src/context/user";
@@ -50,7 +51,7 @@ export default function App() {
                 <Stack.Screen
                   options={{
                     headerShown: true,
-                    title: "Task",
+                    title: "Tasks",
                     headerRight: DashboardMenu,
                   }}
                   name="DashboardScreen"
@@ -63,6 +64,14 @@ export default function App() {
                   }}
                   name="AddTaskScreen"
                   component={AddTaskScreen}
+                />
+                <Stack.Screen
+                  options={{
+                    headerShown: true,
+                    title: "Edit Task",
+                  }}
+                  name="EditTaskScreen"
+                  component={EditTaskScreen}
                 />
               </Stack.Navigator>
             </NavigationContainer>
