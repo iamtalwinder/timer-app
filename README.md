@@ -19,7 +19,7 @@
 ## Signup Screen
 
 <p align="center">
-  <img src="screenshots/signupscreen.png"  width="375" height="812">
+  <img src="screenshots/signupscreen1.png"  width="375" height="812">
 </p>
 
 <p align="center">
@@ -33,7 +33,7 @@
 ## Dashboard Screen
 
 <p align="center">
-  <img src="screenshots/dashboardscreen.png"  width="375" height="812">
+  <img src="screenshots/dashboardscreen1.png"  width="375" height="812">
 </p>
 
 <p align="center">
@@ -50,6 +50,8 @@
   <img src="screenshots/addtaskscreen.png"  width="375" height="812">
 </p>
 
+## Edit Task Screen
+
 <p align="center">
-  <img src="screenshots/addtaskscreen2.png"  width="375" height="812">
+  <img src="screenshots/edittaskscreen.png"  width="375" height="812">
 </p>
