@@ -33,7 +33,7 @@ export default function App() {
           >
             <NavigationContainer>
               <Stack.Navigator
-                initialRouteName="DashboardScreen"
+                initialRouteName="StartScreen"
                 screenOptions={{
                   headerShown: false,
                   headerStyle: {
