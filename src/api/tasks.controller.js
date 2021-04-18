@@ -48,7 +48,7 @@ module.exports = class TasksController {
       );
 
       const updatedTaskFromDB = await TasksDAO.getTask(taskId);
-      res.status(200).send({ msg: "Task updated", updatedTaskFromDB });
+      res.status(200).send({ msg: "Task updated", task: updatedTaskFromDB });
     } catch (e) {
       console.error(e);
       res.status(500).send({ msg: "Internal server error" });
